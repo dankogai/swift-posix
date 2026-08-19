@@ -18,7 +18,7 @@ import POSIX
         #expect(abs(expm1(1e-10) - 1e-10) < 1e-20)
         #expect(abs(log1p(1e-10) - 1e-10) < 1e-20)
         #expect(pow(2, 10) == 1024)
-        #expect(cbrt(27) == 3)
+        #expect(abs(cbrt(27) - 3) < 1e-14) // glibc's cbrt is 1 ulp off
         #expect(hypot(3, 4) == 5)
         #expect(sinh(0) == 0)
         #expect(cosh(0) == 1)

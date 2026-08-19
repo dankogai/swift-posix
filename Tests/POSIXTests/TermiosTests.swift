@@ -31,10 +31,11 @@ import POSIX
     }
 
     @Test func speeds() {
+        // Linux keeps one shared CBAUD field, so test one speed at a time
         var t = Termios()
         t.inputSpeed = .B9600
-        t.outputSpeed = .B38400
         #expect(t.inputSpeed == .B9600)
+        t.outputSpeed = .B38400
         #expect(t.outputSpeed == .B38400)
     }
 }
