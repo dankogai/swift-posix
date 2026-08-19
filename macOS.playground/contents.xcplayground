@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='7.0' target-platform='macos' swift-version='6' buildActiveScheme='true' executeOnSourceChanges='true' importAppTypes='true'>
+    <pages>
+        <page name='Welcome'/>
+        <page name='Math'/>
+        <page name='Strings'/>
+        <page name='Files and Directories'/>
+        <page name='Time'/>
+        <page name='Process and System'/>
+        <page name='Errors and Signals'/>
+        <page name='Terminal'/>
+    </pages>
+</playground>

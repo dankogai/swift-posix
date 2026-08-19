@@ -135,30 +135,38 @@ strlen("hello")
 //              use String.count or utf8.count
 ```
 
+## Documentation and examples
+
+* **Manuals** live in [docs/](docs/README.md) — one per header, with
+  signatures and examples.
+* **Playground**: [macOS.playground](macOS.playground) walks the whole
+  library interactively.  Open the package directory in Xcode, build
+  the **POSIX** scheme once (⌘B), then open the playground pages.
+
 ## Coverage
 
-| header | provided |
-|---|---|
-| `<ctype.h>` | `isalpha` … `isxdigit`, `tolower`, `toupper` (Perl semantics: whole-string tests, C-locale/ASCII rules) |
-| `<dirent.h>` | `Dir` (a `Sequence`), `opendir`, `readdir`, `rewinddir`, `telldir`, `seekdir`, `closedir` |
-| `<errno.h>` | `Errno` with `E*` constants, `strerror`, `Errno.current` |
-| `<fcntl.h>` | `open`, `creat`, `fcntl` with `OpenFlags`, `FcntlCommand`, `FD_CLOEXEC` |
-| `<fenv.h>` | `fegetround`, `fesetround`, `FE_*` |
-| `<float.h>`, `<limits.h>` | `DBL_MAX`, `INT_MAX`, … (defined from Swift's numeric types) |
-| `<grp.h>`, `<pwd.h>` | `getpwnam`, `getpwuid`, `getgrnam`, `getgrgid` returning `Passwd`/`Group` |
-| `<locale.h>` | `setlocale` with `LocaleCategory`, `localeconv` returning `Lconv` |
-| `<math.h>` | the full C99 repertoire, `Double` in and out; `fpclassify` returns Swift's `FloatingPointClassification` |
-| `<signal.h>` | `Signal` constants, `kill`, `raise`, `signal`, `sigaction`, `SigSet`, `sigprocmask`, `sigpending`, `sigsuspend` |
-| `<stdio.h>` | `ctermid`, `cuserid`, `remove`, `rename`, `mkstemp` (stream I/O is C-specific — unimplemented) |
-| `<stdlib.h>` | `exit`, `abort`, `getenv`/`setenv`/`unsetenv`, `strtod`/`strtol`/`strtoul`, `mblen`/`mbtowc`/`wctomb`/`mbstowcs`/`wcstombs` |
-| `<string.h>` | `strcoll`, `strxfrm` (the rest is C-specific — unimplemented) |
-| `<sys/stat.h>` | `Stat`, `stat`, `lstat`, `fstat`, `chmod`, `mkdir`, `mkfifo`, `umask`, `utime` |
-| `<sys/times.h>` | `times` returning `Times` (with elapsed real time, like Perl's) |
-| `<sys/utsname.h>` | `uname` returning `Utsname` |
-| `<sys/wait.h>` | `wait`, `waitpid`, `WaitStatus` (the `W*` macros as properties) |
-| `<termios.h>` | `Termios` with typed flag sets and `BaudRate`, `tcgetattr`, `tcsetattr`, `tcdrain`, `tcflow`, `tcflush`, `tcsendbreak` |
-| `<time.h>` | `Tm`, `time`, `gmtime`, `localtime`, `mktime`, `strftime`, `asctime`, `ctime`, `difftime`, `clock`, `tzset`, `tzname` |
-| `<unistd.h>` | ids, `fork`, `pipe`, `read`, `write`, `open`/`close`/`dup`/`lseek`, `getcwd`/`chdir`, `link`/`unlink`/`rmdir`, `access`, `sysconf`/`pathconf`, `isatty`/`ttyname`, `alarm`/`pause`/`sleep`, `getgroups`, `getlogin`, `nice`, `tcgetpgrp`/`tcsetpgrp` |
+| header | manual | provided |
+|---|---|---|
+| `<ctype.h>` | [CType.md](docs/CType.md) | `isalpha` … `isxdigit`, `tolower`, `toupper` (Perl semantics: whole-string tests, C-locale/ASCII rules) |
+| `<dirent.h>` | [Dirent.md](docs/Dirent.md) | `Dir` (a `Sequence`), `opendir`, `readdir`, `rewinddir`, `telldir`, `seekdir`, `closedir` |
+| `<errno.h>` | [Errno.md](docs/Errno.md) | `Errno` with `E*` constants, `strerror`, `Errno.current` |
+| `<fcntl.h>` | [Fcntl.md](docs/Fcntl.md) | `open`, `creat`, `fcntl` with `OpenFlags`, `FcntlCommand`, `FD_CLOEXEC` |
+| `<fenv.h>` | [Math.md](docs/Math.md) | `fegetround`, `fesetround`, `FE_*` |
+| `<float.h>`, `<limits.h>` | [Limits.md](docs/Limits.md) | `DBL_MAX`, `INT_MAX`, … (defined from Swift's numeric types) |
+| `<grp.h>`, `<pwd.h>` | [PwdGrp.md](docs/PwdGrp.md) | `getpwnam`, `getpwuid`, `getgrnam`, `getgrgid` returning `Passwd`/`Group` |
+| `<locale.h>` | [Locale.md](docs/Locale.md) | `setlocale` with `LocaleCategory`, `localeconv` returning `Lconv` |
+| `<math.h>` | [Math.md](docs/Math.md) | the full C99 repertoire, `Double` in and out; `fpclassify` returns Swift's `FloatingPointClassification` |
+| `<signal.h>` | [Signal.md](docs/Signal.md) | `Signal` constants, `kill`, `raise`, `signal`, `sigaction`, `SigSet`, `sigprocmask`, `sigpending`, `sigsuspend` |
+| `<stdio.h>` | [Stdio.md](docs/Stdio.md) | `ctermid`, `cuserid`, `remove`, `rename`, `mkstemp` (stream I/O is C-specific — unimplemented) |
+| `<stdlib.h>` | [Stdlib.md](docs/Stdlib.md) | `exit`, `abort`, `getenv`/`setenv`/`unsetenv`, `strtod`/`strtol`/`strtoul`, `mblen`/`mbtowc`/`wctomb`/`mbstowcs`/`wcstombs` |
+| `<string.h>` | [Stdlib.md](docs/Stdlib.md) | `strcoll`, `strxfrm` (the rest is C-specific — unimplemented) |
+| `<sys/stat.h>` | [SysStat.md](docs/SysStat.md) | `Stat`, `stat`, `lstat`, `fstat`, `chmod`, `mkdir`, `mkfifo`, `umask`, `utime` |
+| `<sys/times.h>` | [Time.md](docs/Time.md) | `times` returning `Times` (with elapsed real time, like Perl's) |
+| `<sys/utsname.h>` | [SysUtsname.md](docs/SysUtsname.md) | `uname` returning `Utsname` |
+| `<sys/wait.h>` | [SysWait.md](docs/SysWait.md) | `wait`, `waitpid`, `WaitStatus` (the `W*` macros as properties) |
+| `<termios.h>` | [Termios.md](docs/Termios.md) | `Termios` with typed flag sets and `BaudRate`, `tcgetattr`, `tcsetattr`, `tcdrain`, `tcflow`, `tcflush`, `tcsendbreak` |
+| `<time.h>` | [Time.md](docs/Time.md) | `Tm`, `time`, `gmtime`, `localtime`, `mktime`, `strftime`, `asctime`, `ctime`, `difftime`, `clock`, `tzset`, `tzname` |
+| `<unistd.h>` | [Unistd.md](docs/Unistd.md) | ids, `fork`, `pipe`, `read`, `write`, `open`/`close`/`dup`/`lseek`, `getcwd`/`chdir`, `link`/`unlink`/`rmdir`, `access`, `sysconf`/`pathconf`, `isatty`/`ttyname`, `alarm`/`pause`/`sleep`, `getgroups`, `getlogin`, `nice`, `tcgetpgrp`/`tcsetpgrp` |
 
 ## License
 
