@@ -4,10 +4,14 @@ import PackageDescription
 let package = Package(
     name: "swift-posix",
     products: [
-        .library(name: "POSIX", targets: ["POSIX"])
+        // one product, two modules:
+        //   import POSIX         — everything under the POSIX namespace
+        //   import POSIXGlobals  — everything at the top level, Perl-style
+        .library(name: "POSIX", targets: ["POSIX", "POSIXGlobals"])
     ],
     targets: [
-        .target(name: "POSIX"),
-        .testTarget(name: "POSIXTests", dependencies: ["POSIX"]),
+        .target(name: "POSIXGlobals"),
+        .target(name: "POSIX", dependencies: ["POSIXGlobals"]),
+        .testTarget(name: "POSIXTests", dependencies: ["POSIX", "POSIXGlobals"]),
     ]
 )

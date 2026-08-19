@@ -96,7 +96,7 @@ public func asctime(_ tm: Tm) -> String {
     var ctm = tm.ctm
     var buf = [CChar](repeating: 0, count: 32) // >= 26
     guard asctime_r(&ctm, &buf) != nil else { return "" }
-    return String(cString: buf)
+    return stringFromCChars(buf)
 }
 
 /// identical to C's `ctime(3)`: `asctime(localtime(t))`.
@@ -110,7 +110,7 @@ public func strftime(_ format: String, _ tm: Tm) -> String {
         while capacity <= 64 * 1024 {
             var buf = [CChar](repeating: 0, count: capacity)
             let n = strftime(&buf, capacity, fmt, &ctm)
-            if n > 0 || format.isEmpty { return String(cString: buf) }
+            if n > 0 || format.isEmpty { return stringFromCChars(buf) }
             capacity *= 4
         }
         return ""

@@ -1,5 +1,5 @@
 import Testing
-import POSIX
+import POSIXGlobals
 
 @Suite struct LocaleTests {
     @Test func cLocale() {

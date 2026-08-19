@@ -1,5 +1,5 @@
 import Testing
-import POSIX
+import POSIXGlobals
 
 // Pure bit-twiddling on wait statuses; no processes are spawned.
 @Suite struct WaitTests {

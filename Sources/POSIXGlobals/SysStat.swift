@@ -164,14 +164,14 @@ public struct Stat: Sendable {
 /// identical to C's `stat(2)`, but returns a swifty `Stat`.
 public func stat(_ path: String) throws -> Stat {
     var st = stat()
-    try path.withCString { try check(stat($0, &st)) }
+    _ = try path.withCString { try check(stat($0, &st)) }
     return Stat(st)
 }
 
 /// identical to C's `lstat(2)`, but returns a swifty `Stat`.
 public func lstat(_ path: String) throws -> Stat {
     var st = stat()
-    try path.withCString { try check(lstat($0, &st)) }
+    _ = try path.withCString { try check(lstat($0, &st)) }
     return Stat(st)
 }
 
@@ -184,17 +184,17 @@ public func fstat(_ fd: CInt) throws -> Stat {
 
 /// identical to C's `chmod(2)`.
 public func chmod(_ path: String, _ mode: mode_t) throws {
-    try path.withCString { try check(chmod($0, mode)) }
+    _ = try path.withCString { try check(chmod($0, mode)) }
 }
 
 /// identical to C's `mkdir(2)`.
 public func mkdir(_ path: String, _ mode: mode_t = 0o777) throws {
-    try path.withCString { try check(mkdir($0, mode)) }
+    _ = try path.withCString { try check(mkdir($0, mode)) }
 }
 
 /// identical to C's `mkfifo(2)`.
 public func mkfifo(_ path: String, _ mode: mode_t = 0o666) throws {
-    try path.withCString { try check(mkfifo($0, mode)) }
+    _ = try path.withCString { try check(mkfifo($0, mode)) }
 }
 
 /// identical to C's `umask(2)`; returns the previous mask.

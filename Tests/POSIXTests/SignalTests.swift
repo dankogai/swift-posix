@@ -1,5 +1,5 @@
 import Testing
-import POSIX
+import POSIXGlobals
 
 @Suite struct SignalTests {
     @Test func sigsetMembership() {

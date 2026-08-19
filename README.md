@@ -15,40 +15,68 @@ types.
 [Perl's POSIX module]: https://perldoc.perl.org/POSIX
 
 ```swift
-import POSIX
+import POSIX   // brings exactly ONE name into scope: the POSIX namespace
 
 // Strings in, Strings out
-let cwd  = try getcwd()                    // "/Users/dankogai"
-let real = tolower("Hello, World!")        // C-locale case mapping
+let cwd  = try POSIX.getcwd()              // "/Users/dankogai"
+let real = POSIX.tolower("Hello, World!")  // C-locale case mapping
 
 // throws Errno instead of returning -1
 do {
-    try unlink("/no/such/file")
-} catch let e as Errno where e == .ENOENT {
+    try POSIX.unlink("/no/such/file")
+} catch let e as POSIX.Errno where e == .ENOENT {
     print(e)                               // "No such file or directory"
 }
 
 // C structs, made swifty
-let st = try stat("Package.swift")
+let st = try POSIX.stat("Package.swift")
 st.isRegularFile                           // true (S_ISREG)
 st.size                                    // 501
 st.permissions.contains(.S_IRUSR)          // true
 st.mtime.timeInterval                      // 1755590000.5817671
 
 // out-parameters become tuples
-let (mantissa, exponent) = frexp(8)        // (0.5, 4)
-let (value, unparsed) = strtod("3.14foo")  // (3.14, 3)
-let (r, w) = try pipe()
+let (mantissa, exponent) = POSIX.frexp(8)  // (0.5, 4)
+let (value, unparsed) = POSIX.strtod("3.14foo") // (3.14, 3)
+let (r, w) = try POSIX.pipe()
 
 // flags become OptionSets
-let fd = try open("/tmp/log", [.O_WRONLY, .O_CREAT, .O_APPEND], 0o644)
-try write(fd, "hello\n")
-try close(fd)
+let fd = try POSIX.open("/tmp/log", [.O_WRONLY, .O_CREAT, .O_APPEND], 0o644)
+try POSIX.write(fd, "hello\n")
+try POSIX.close(fd)
 
 // and time is a struct, not a tuple of nine Ints
-strftime("%Y-%m-%d", gmtime(0))            // "1970-01-01"
-asctime(gmtime(0))                         // "Thu Jan  1 00:00:00 1970\n"
+POSIX.strftime("%Y-%m-%d", POSIX.gmtime(0)) // "1970-01-01"
+POSIX.asctime(POSIX.gmtime(0))              // "Thu Jan  1 00:00:00 1970\n"
 ```
+
+## Exporting on demand
+
+Like Perl's `use POSIX ()` vs `use POSIX`, you choose how much lands in
+your namespace.  `import POSIX` (above) exports nothing but the `POSIX`
+namespace itself.  When you want the names at the top level, opt in:
+
+```swift
+import POSIXGlobals   // Perl-style: everything exported
+
+let cwd = try getcwd()
+let st  = try stat("Package.swift")
+strftime("%Y-%m-%d", gmtime(0))
+```
+
+or cherry-pick single symbols, `@EXPORT_OK`-style, with Swift's scoped
+imports:
+
+```swift
+import POSIX
+import func POSIXGlobals.floor       // just floor at the top level
+import struct POSIXGlobals.Errno     // just Errno
+
+floor(3.7)                           // 3.0
+```
+
+Both modules ship in the one `POSIX` library product, and they share
+the same underlying types, so the two styles mix freely.
 
 ## Requirements
 
@@ -62,9 +90,9 @@ Add to your `Package.swift`:
 .package(url: "https://github.com/dankogai/swift-posix.git", from: "0.0.1")
 ```
 
-and `import POSIX`.  Everything the module exports is also reachable
-fully qualified (`POSIX.floor`, `POSIX.open`, …), which is handy when
-you also import Foundation and names collide.
+and `import POSIX` (namespaced) or `import POSIXGlobals` (top-level
+names).  The namespaced form never collides with Foundation or the C
+overlays, no matter what else you import.
 
 ## Design
 

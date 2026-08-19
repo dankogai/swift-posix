@@ -25,7 +25,7 @@ public func getenv(_ name: String) -> String? {
 
 /// identical to C's `setenv(3)`.
 public func setenv(_ name: String, _ value: String, _ overwrite: Bool = true) throws {
-    try name.withCString { n in
+    _ = try name.withCString { n in
         try value.withCString { v in
             try check(setenv(n, v, overwrite ? 1 : 0))
         }
@@ -34,7 +34,7 @@ public func setenv(_ name: String, _ value: String, _ overwrite: Bool = true) th
 
 /// identical to C's `unsetenv(3)`.
 public func unsetenv(_ name: String) throws {
-    try name.withCString { try check(unsetenv($0)) }
+    _ = try name.withCString { try check(unsetenv($0)) }
 }
 
 /// identical to C's `strtod(3)`; returns the parsed value and the number
@@ -135,6 +135,6 @@ public func strxfrm(_ s: String) -> String {
         let n = strxfrm(nil, p, 0)
         var buf = [CChar](repeating: 0, count: n + 1)
         _ = strxfrm(&buf, p, n + 1)
-        return String(cString: buf)
+        return stringFromCChars(buf)
     }
 }

@@ -11,7 +11,7 @@ import Glibc
 public func ctermid() -> String {
     var buf = [CChar](repeating: 0, count: 1024) // >= L_ctermid
     _ = ctermid(&buf)
-    return String(cString: buf)
+    return stringFromCChars(buf)
 }
 
 /// identical to C's `cuserid(3)`: the name associated with the effective
@@ -22,12 +22,12 @@ public func cuserid() -> String? {
 
 /// identical to C's `remove(3)`.
 public func remove(_ path: String) throws {
-    try path.withCString { try check(remove($0)) }
+    _ = try path.withCString { try check(remove($0)) }
 }
 
 /// identical to C's `rename(2)`.
 public func rename(_ old: String, _ new: String) throws {
-    try old.withCString { o in
+    _ = try old.withCString { o in
         try new.withCString { n in
             try check(rename(o, n))
         }
@@ -40,5 +40,5 @@ public func rename(_ old: String, _ new: String) throws {
 public func mkstemp(_ template: String) throws -> (fd: CInt, path: String) {
     var buf = Array(template.utf8CString)
     let fd = try check(mkstemp(&buf))
-    return (fd, String(cString: buf))
+    return (fd, stringFromCChars(buf))
 }

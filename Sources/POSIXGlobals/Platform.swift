@@ -42,14 +42,9 @@ public let M_LOG2E = Darwin.M_LOG2E
 public let M_LOG10E = Darwin.M_LOG10E
 public let M_LN2 = Darwin.M_LN2
 public let M_LN10 = Darwin.M_LN10
-public let M_PI = Darwin.M_PI
-public let M_PI_2 = Darwin.M_PI_2
-public let M_PI_4 = Darwin.M_PI_4
 public let M_1_PI = Darwin.M_1_PI
 public let M_2_PI = Darwin.M_2_PI
 public let M_2_SQRTPI = Darwin.M_2_SQRTPI
-public let M_SQRT2 = Darwin.M_SQRT2
-public let M_SQRT1_2 = Darwin.M_SQRT1_2
 public let FE_TONEAREST = fenv_h.FE_TONEAREST
 public let FE_TOWARDZERO = fenv_h.FE_TOWARDZERO
 public let FE_UPWARD = fenv_h.FE_UPWARD
@@ -161,14 +156,9 @@ public let M_LOG2E = Glibc.M_LOG2E
 public let M_LOG10E = Glibc.M_LOG10E
 public let M_LN2 = Glibc.M_LN2
 public let M_LN10 = Glibc.M_LN10
-public let M_PI = Glibc.M_PI
-public let M_PI_2 = Glibc.M_PI_2
-public let M_PI_4 = Glibc.M_PI_4
 public let M_1_PI = Glibc.M_1_PI
 public let M_2_PI = Glibc.M_2_PI
 public let M_2_SQRTPI = Glibc.M_2_SQRTPI
-public let M_SQRT2 = Glibc.M_SQRT2
-public let M_SQRT1_2 = Glibc.M_SQRT1_2
 // SwiftGlibc imports the FE_* rounding modes twice (an unresolvable
 // ambiguity), so spell out these per-architecture ABI constants.
 #if arch(x86_64) || arch(i386)
@@ -271,6 +261,19 @@ internal enum C {
     static func tcsetpgrp(_ fd: Int32, _ pgid: pid_t) -> Int32 { Glibc.tcsetpgrp(fd, pgid) }
 }
 #endif
+
+// These five are deprecated in the Darwin overlay in favor of Swift-native
+// spellings, which produce bit-identical values — so define them natively.
+public let M_PI = Double.pi
+public let M_PI_2 = Double.pi / 2
+public let M_PI_4 = Double.pi / 4
+public let M_SQRT2 = 2.0.squareRoot()
+public let M_SQRT1_2 = 0.5.squareRoot()
+
+/// Converts a NUL-terminated [CChar] buffer to a String.
+internal func stringFromCChars(_ buf: [CChar]) -> String {
+    String(decoding: buf.prefix(while: { $0 != 0 }).map { UInt8(bitPattern: $0) }, as: UTF8.self)
+}
 
 /// Converts a fixed-size C char array (imported as a tuple) to a String.
 internal func stringFromCCharTuple<T>(_ tuple: T) -> String {

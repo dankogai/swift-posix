@@ -174,12 +174,12 @@ public func access(_ path: String, _ mode: AccessMode = .F_OK) -> Bool {
 
 /// identical to C's `chdir(2)`.
 public func chdir(_ path: String) throws {
-    try path.withCString { try check(chdir($0)) }
+    _ = try path.withCString { try check(chdir($0)) }
 }
 
 /// identical to C's `chown(2)`.
 public func chown(_ path: String, _ owner: uid_t, _ group: gid_t) throws {
-    try path.withCString { try check(chown($0, owner, group)) }
+    _ = try path.withCString { try check(chown($0, owner, group)) }
 }
 
 /// identical to C's `getcwd(3)`.
@@ -191,7 +191,7 @@ public func getcwd() throws -> String {
 
 /// identical to C's `link(2)`.
 public func link(_ existing: String, _ new: String) throws {
-    try existing.withCString { e in
+    _ = try existing.withCString { e in
         try new.withCString { n in
             try check(link(e, n))
         }
@@ -200,12 +200,12 @@ public func link(_ existing: String, _ new: String) throws {
 
 /// identical to C's `unlink(2)`.
 public func unlink(_ path: String) throws {
-    try path.withCString { try check(unlink($0)) }
+    _ = try path.withCString { try check(unlink($0)) }
 }
 
 /// identical to C's `rmdir(2)`.
 public func rmdir(_ path: String) throws {
-    try path.withCString { try check(rmdir($0)) }
+    _ = try path.withCString { try check(rmdir($0)) }
 }
 
 // MARK: sysconf / pathconf

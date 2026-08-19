@@ -1,5 +1,5 @@
 import Testing
-import POSIX
+import POSIXGlobals
 
 // Pure struct manipulation; no terminal is touched.
 @Suite struct TermiosTests {
