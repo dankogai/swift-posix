@@ -215,18 +215,19 @@ public struct SysconfName: RawRepresentable, Hashable, Sendable {
     public var rawValue: CInt
     public init(rawValue: CInt) { self.rawValue = rawValue }
 
-    public static let argMax = SysconfName(rawValue: _SC_ARG_MAX)
-    public static let childMax = SysconfName(rawValue: _SC_CHILD_MAX)
-    public static let clockTick = SysconfName(rawValue: _SC_CLK_TCK)
-    public static let ngroupsMax = SysconfName(rawValue: _SC_NGROUPS_MAX)
-    public static let openMax = SysconfName(rawValue: _SC_OPEN_MAX)
-    public static let pageSize = SysconfName(rawValue: _SC_PAGESIZE)
-    public static let streamMax = SysconfName(rawValue: _SC_STREAM_MAX)
-    public static let tznameMax = SysconfName(rawValue: _SC_TZNAME_MAX)
-    public static let jobControl = SysconfName(rawValue: _SC_JOB_CONTROL)
-    public static let savedIDs = SysconfName(rawValue: _SC_SAVED_IDS)
-    public static let version = SysconfName(rawValue: _SC_VERSION)
-    public static let processorsOnline = SysconfName(rawValue: _SC_NPROCESSORS_ONLN)
+    // CInt() because Glibc imports these anonymous-enum constants as Int
+    public static let argMax = SysconfName(rawValue: CInt(_SC_ARG_MAX))
+    public static let childMax = SysconfName(rawValue: CInt(_SC_CHILD_MAX))
+    public static let clockTick = SysconfName(rawValue: CInt(_SC_CLK_TCK))
+    public static let ngroupsMax = SysconfName(rawValue: CInt(_SC_NGROUPS_MAX))
+    public static let openMax = SysconfName(rawValue: CInt(_SC_OPEN_MAX))
+    public static let pageSize = SysconfName(rawValue: CInt(_SC_PAGESIZE))
+    public static let streamMax = SysconfName(rawValue: CInt(_SC_STREAM_MAX))
+    public static let tznameMax = SysconfName(rawValue: CInt(_SC_TZNAME_MAX))
+    public static let jobControl = SysconfName(rawValue: CInt(_SC_JOB_CONTROL))
+    public static let savedIDs = SysconfName(rawValue: CInt(_SC_SAVED_IDS))
+    public static let version = SysconfName(rawValue: CInt(_SC_VERSION))
+    public static let processorsOnline = SysconfName(rawValue: CInt(_SC_NPROCESSORS_ONLN))
 }
 
 /// identical to C's `sysconf(3)`; nil means "no limit / not supported".
@@ -245,15 +246,16 @@ public struct PathconfName: RawRepresentable, Hashable, Sendable {
     public var rawValue: CInt
     public init(rawValue: CInt) { self.rawValue = rawValue }
 
-    public static let linkMax = PathconfName(rawValue: _PC_LINK_MAX)
-    public static let maxCanon = PathconfName(rawValue: _PC_MAX_CANON)
-    public static let maxInput = PathconfName(rawValue: _PC_MAX_INPUT)
-    public static let nameMax = PathconfName(rawValue: _PC_NAME_MAX)
-    public static let pathMax = PathconfName(rawValue: _PC_PATH_MAX)
-    public static let pipeBuf = PathconfName(rawValue: _PC_PIPE_BUF)
-    public static let chownRestricted = PathconfName(rawValue: _PC_CHOWN_RESTRICTED)
-    public static let noTrunc = PathconfName(rawValue: _PC_NO_TRUNC)
-    public static let vdisable = PathconfName(rawValue: _PC_VDISABLE)
+    // CInt() because Glibc imports these anonymous-enum constants as Int
+    public static let linkMax = PathconfName(rawValue: CInt(_PC_LINK_MAX))
+    public static let maxCanon = PathconfName(rawValue: CInt(_PC_MAX_CANON))
+    public static let maxInput = PathconfName(rawValue: CInt(_PC_MAX_INPUT))
+    public static let nameMax = PathconfName(rawValue: CInt(_PC_NAME_MAX))
+    public static let pathMax = PathconfName(rawValue: CInt(_PC_PATH_MAX))
+    public static let pipeBuf = PathconfName(rawValue: CInt(_PC_PIPE_BUF))
+    public static let chownRestricted = PathconfName(rawValue: CInt(_PC_CHOWN_RESTRICTED))
+    public static let noTrunc = PathconfName(rawValue: CInt(_PC_NO_TRUNC))
+    public static let vdisable = PathconfName(rawValue: CInt(_PC_VDISABLE))
 }
 
 /// identical to C's `pathconf(3)`; nil means "no limit / not supported".

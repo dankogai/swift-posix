@@ -169,10 +169,29 @@ public let M_2_PI = Glibc.M_2_PI
 public let M_2_SQRTPI = Glibc.M_2_SQRTPI
 public let M_SQRT2 = Glibc.M_SQRT2
 public let M_SQRT1_2 = Glibc.M_SQRT1_2
-public let FE_TONEAREST = Glibc.FE_TONEAREST
-public let FE_TOWARDZERO = Glibc.FE_TOWARDZERO
-public let FE_UPWARD = Glibc.FE_UPWARD
-public let FE_DOWNWARD = Glibc.FE_DOWNWARD
+// SwiftGlibc imports the FE_* rounding modes twice (an unresolvable
+// ambiguity), so spell out these per-architecture ABI constants.
+#if arch(x86_64) || arch(i386)
+public let FE_TONEAREST: CInt = 0
+public let FE_DOWNWARD: CInt = 0x400
+public let FE_UPWARD: CInt = 0x800
+public let FE_TOWARDZERO: CInt = 0xc00
+#elseif arch(arm64) || arch(arm)
+public let FE_TONEAREST: CInt = 0
+public let FE_UPWARD: CInt = 0x400000
+public let FE_DOWNWARD: CInt = 0x800000
+public let FE_TOWARDZERO: CInt = 0xc00000
+#elseif arch(riscv64)
+public let FE_TONEAREST: CInt = 0
+public let FE_TOWARDZERO: CInt = 1
+public let FE_DOWNWARD: CInt = 2
+public let FE_UPWARD: CInt = 3
+#elseif arch(powerpc64) || arch(powerpc64le) || arch(s390x)
+public let FE_TONEAREST: CInt = 0
+public let FE_TOWARDZERO: CInt = 1
+public let FE_UPWARD: CInt = 2
+public let FE_DOWNWARD: CInt = 3
+#endif // other architectures: no FE_* constants
 public let CLOCKS_PER_SEC = Glibc.CLOCKS_PER_SEC
 public let FD_CLOEXEC = Glibc.FD_CLOEXEC
 
